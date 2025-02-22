@@ -1,0 +1,151 @@
+table.highlight > tbody > tr:hover {
+  background-color: #cfd8dc !important;
+}
+table {
+  font-size: medium !important;
+}
+.modal {
+  width: 75% !important ;
+  max-height: 85% !important;
+}
+.addNewButton {
+  top: 10px !important;
+  right: 10px !important;
+  bottom: auto !important;
+  padding-top: 0px !important;
+}
+.navBarButton {
+  top: 0px !important;
+  left: 0px !important;
+  bottom: auto !important;
+  right: auto !important;
+  padding-top: 0px !important;
+}
+.fitContent {
+  width: fit-content !important;
+}
+.flexWrap {
+  flex-wrap: wrap !important;
+}
+.myHide {
+  visibility: hidden;
+}
+.tabs .tab a {
+  color: #4db6ac !important;
+  /*Custom Text Color (teal lighten-2)*/
+}
+.tabs .tab a:hover {
+  color: #26a69a !important;
+  /*Custom Color On Hover (teal lighten-1)*/
+}
+.tabs .tab a:focus.active {
+  color: #26a69a !important;
+  /*Custom Text Color While Active (teal lighten-1)*/
+  background-color: #e0f2f1 !important;
+  /*Custom Background Color While Active (teal lighten-5)*/
+}
+.tabs .indicator {
+  background-color: #4db6ac !important;
+  /*Custom Color Of Indicator (teal lighten-2)*/
+}
+.mySpanPadding {
+  padding-left: 22px !important;
+}
+.myMargins {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+.bgPhoto {
+  background-image: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.whiteTextShadow {
+  text-shadow: 0px 0px 3px whitesmoke;
+}
+#activeKampName {
+  background-color: #bfe499;
+  border-radius: 25px;
+  color: gray;
+  text-align: center;
+}
+.activeLinkName {
+  background-color: darkgrey;
+  border-radius: 25px;
+  text-align: center;
+}
+.dashboardCard {
+  border-radius: 35px !important;
+  background-size: contain;
+  background-position: center;
+}
+.select-dropdown {
+  max-height: 300px !important;
+}
+.autocomplete-content {
+  max-height: 275px !important;
+}
+.mainTitle {
+  border-radius: 30px;
+  border: solid #ccc;
+  padding: 5px 5px;
+}
+.modal {
+  max-width: 1000px !important;
+}
+img#imageDisplay {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+.datepicker-modal {
+  max-height: none !important;
+}
+.noMargins {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.verticallyCentered {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+}
+#myNavBar{
+  height: 100%;
+}
+.select-dropdown li img{
+  width: 60px !important;
+  float: left !important;
+  border-radius: 10px;
+  border: #000;
+  border-width: 1px;
+  border-style: solid;
+  overflow-x: hidden;
+  object-fit: cover;
+  object-position: center;
+}
+#flagImage{
+  height: 40px;
+  width: 60px;
+  border-radius: 10px;
+  border: #000;
+  border-width: 1px;
+  border-style: solid;
+  overflow-x: hidden;
+  object-fit: cover;
+  object-position: center;
+  float: left;
+}
+.colorDiv{
+  height: 2rem;
+  width: 2rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #000;
+  border-radius: 3px;
+}
+#objectTable{
+  margin-bottom: 2rem;
+}
