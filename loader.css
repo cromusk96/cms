@@ -1,0 +1,27 @@
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 0.2s;
+}
+
+#loader .container {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#loader {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#loader.show {
+  visibility: visible;
+  opacity: 1;
+}

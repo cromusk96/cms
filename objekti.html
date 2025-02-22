@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title localization-key="Objekti">Objekti</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!--Import main.css-->
+  <link rel="stylesheet" type="text/css" media="screen" href="/cms/public/main.css" />
+  <!--Import loader.css-->
+  <link rel="stylesheet" type="text/css" media="screen" href="/cms/loader.css" />
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <!--Import jQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!--Import javascript-->
+  <script src="/cms/functions/functionsFrontend.js"></script>
+  <script src="/cms/functions/loaderFunctions.js"></script>
+  <script src="/cms/functions/imageFunctions.js"></script>
+  <script src="/cms/functions/httpFunctions.js"></script>
+  <script src="/cms/functions/paginationFunctions.js"></script>
+  <script src="/cms/functions/validationFunctions.js"></script>
+  <script src="/cms/objekti.js"></script>
+</head>
+
+<body>
+  <!--Fixed add new button-->
+  <div class="fixed-action-btn addNewButton">
+    <button onclick="addNew()" class="waves-effect waves-light btn-floating green">
+      <i class="material-icons left">add</i>
+    </button>
+  </div>
+  <!--Fixed menu button for smaller screens-->
+  <div class="fixed-action-btn navBarButton">
+    <button data-target="myNavBar" class="waves-effect waves-light btn sidenav-trigger">
+      <i class="material-icons">menu</i>
+    </button>
+  </div>
+  <div class="row">
+    <!--Navbar-->
+    <ul id="myNavBar" class="sidenav sidenav-fixed col s0 l2">
+      <li>
+        <a href="/cms" class="truncate"><b localization-key="DASHBOARD">DASHBOARD</b></a>
+      </li>
+      <li>
+        <a id="activeKampName" href="#" class="truncate"></a>
+      </li>
+      <div class="divider"></div>
+      <li>
+        <a href="/cms/vrstaSJ" class="truncate" localization-key="Vrsta smještajne jedinice">Vrsta smještajne
+          jedinice</a>
+      </li>
+      <li>
+        <a href="/cms/brojSJ" class="truncate" localization-key="Smještajna jedinica">Smještajna jedinica</a>
+      </li>
+      <li>
+        <a href="/cms/objekti" class="truncate activeLinkName" localization-key="Objekti">Objekti</a>
+      </li>
+      <li>
+        <a href="/cms/tockeInteresa" class="truncate" localization-key="Točke interesa">Točke interesa</a>
+      </li>
+      <li>
+        <a href="/cms/translations" class="truncate" localization-key="Prijevodi">Prijevodi</a>
+      </li>
+      <li>
+        <a href="/cms/natpisi" class="truncate" localization-key="Natpisi">Natpisi</a>
+      </li>
+      <div class="divider"></div>
+      <li>
+        <a href="/cms/postavke" class="truncate" localization-key="Postavke">Postavke</a>
+      </li>
+      <li>
+        <a href="/cms/stopBooking" class="truncate" localization-key="Stop Booking">Stop Booking</a>
+      </li>
+      <!--li>
+        <a href="/cms/cjenici" class="truncate" localization-key="Cjenici">Cjenici</a>
+      </li-->
+      <li class="hide showToAdmin">
+        <a href="/cms/useri" class="truncate" localization-key="Useri">Useri</a>
+      </li>
+      <li class="hide showToAdmin">
+        <a href="/cms/parametri" class="truncate" localization-key="Parametri">Parametri</a>
+      </li>
+      <li>
+        <a href="/cms/dozvoljeniCjenici" class="truncate" localization-key="Dozvoljeni cjenici">Dozvoljeni cjenici</a>
+      </li>
+      <li>
+        <a href="/cms/ostalePostavke" class="truncate" localization-key="Ostale postavke">Ostale postavke</a>
+      </li>
+      <div class="divider"></div>
+      <li>
+        <a href="/cms/redoslijed" class="truncate" localization-key="Redoslijed vrsta sjmeštajne jedinice">Redoslijed
+          vrsta sjmeštajne jedinice</a>
+      </li>
+      <li>
+        <a href="/cms/redoslijedPoi" class="truncate" localization-key="Redoslijed točki interesa">Redoslijed točki
+          interesa</a>
+      </li>
+      <li>
+        <a href="/cms/osuncanost" class="truncate" localization-key="Osunčanost">Osunčanost</a>
+      </li>
+      <li>
+        <a href="/cms/grupeTocki" class="truncate" localization-key="Grupe točki interesa">Grupe točki interesa</a>
+      </li>
+      <li>
+        <a href="/cms/podloga" class="truncate" localization-key="Podloge parcela">Podloge parcela</a>
+      </li>
+      <div class="divider"></div>
+      <li class="hide showToAdmin">
+        <a href="/cms/integracije" class="truncate" localization-key="Integracije">Integracije</a>
+      </li>
+      <li class="hide showToAdmin">
+        <a href="/cms/paymentGw" class="truncate" localization-key="Payment gateway">Payment gateway</a>
+      </li>
+      <div class="divider hide showToAdmin"></div>
+      <li>
+        <a href="/cms/logout" class="truncate" localization-key="Odjavi se" onclick="logout()">Odjavi se</a>
+      </li>
+    </ul>
+    <!--page contents-->
+    <div class="col s12 l10 offset-l2">
+      <div class="row valign-wrapper flexWrap">
+        <div class="col m1 l2 hide-on-small-only show-on-medium-and-up">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <div class="col s12 m10 l7">
+          <h4 class="center mainTitle" localization-key="Objekti">Objekti</h4>
+        </div>
+        <div class="col m1 l3 hide-on-small-only show-on-medium-and-up">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <!--Pagination controls-->
+        <ul class="pagination col s12 m6 l7 center-align push-m2 push-l2">
+          <li class="leftArrow disabled">
+            <a href="#!"><i class="material-icons">chevron_left</i></a>
+          </li>
+          <li class="rightArrow disabled">
+            <a href="#!"><i class="material-icons">chevron_right</i></a>
+          </li>
+        </ul>
+        <div class="input-field col s4 m2 l2 pull-m6 pull-l7">
+          <label id="itemsPerPageLabel" for="itemsPerPage" class="active"
+            localization-key="Broj zapisa po stranici">Broj zapisa po stranici</label>
+          <select id="itemsPerPage" onchange="setItemsPerPage()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="SVE" localization-key="SVE">SVE</option>
+          </select>
+        </div>
+        <!--Search field-->
+        <div class="input-field col s8 m4 l3">
+          <i class="material-icons prefix">search</i>
+          <input id="search" type="text" required oninput="applyFilters()" autocomplete="off" />
+        </div>
+      </div>
+      <!--table where data will go-->
+      <table id="objectTable" class="highlight">
+        <thead>
+          <tr>
+            <th localization-key="ID na mapi">ID na mapi</th>
+            <th localization-key="Vrsta">Vrsta</th>
+            <th localization-key="Naziv">Naziv</th>
+            <th localization-key="Podnaziv">Podnaziv</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--Pagination controls on the bottom-->
+      <div class="col m2 l2 hide-on-small-only show-on-medium-and-up">
+        <!--filler div to make everything stay in place-->
+      </div>
+      <ul class="pagination col s12 m6 l7 center-align">
+        <li class="leftArrow disabled">
+          <a href="#!"><i class="material-icons">chevron_left</i></a>
+        </li>
+        <li class="rightArrow disabled">
+          <a href="#!"><i class="material-icons">chevron_right</i></a>
+        </li>
+      </ul>
+      <div class="col m4 l3 hide-on-small-only show-on-medium-and-up">
+        <!--filler div to make everything stay in place-->
+      </div>
+    </div>
+  </div>
+  <!-- Confirm delete modal -->
+  <div id="confirmDelete" class="modal fitContent">
+    <div class="modal-content">
+      <h4 localization-key="Upozorenje">Upozorenje</h4>
+      <p localization-key="Jeste li sigurni da želite obrisati taj objekt?">
+        Jeste li sigurni da želite obrisati taj objekt?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close waves-effect waves-green btn-flat">
+        <i class="material-icons left">cancel</i>
+        <span localization-key="Ne">Ne</span>
+      </button>
+      <button id="confirmDeleteButton" class="modal-close waves-effect waves-green btn-flat">
+        <i class="material-icons left">check</i>
+        <span localization-key="Da">Da</span>
+      </button>
+    </div>
+  </div>
+  <!-- Edit object modal -->
+  <div id="editObjectModal" class="modal">
+    <div class="modal-content">
+      <div class="row valign-wrapper flexWrap">
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Naziv:">Naziv:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="nazivInput" id="nazivInput" />
+          <span class="helper-text" data-error="Obavezno polje." data-success=""
+            localization-key="Obavezno polje."></span>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Podnaziv:">Podnaziv:</p>
+        </div>
+        <div class="col s9 m4 l4">
+          <input type="text" name="podnazivInput" id="podnazivInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Radno vrijeme:">
+            Radno vrijeme:
+          </p>
+        </div>
+        <div class="col s9 m4 l2">
+          <input type="text" name="radnoVrijemeInput" id="radnoVrijemeInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Vrsta:">Vrsta:</p>
+        </div>
+        <div class="input-field col s9 m4 l3">
+          <input type="text" name="vrstaObjektaUidInput" id="vrstaObjektaUidInput" class="autocomplete"
+            autocomplete="off" />
+          <span class="helper-text" data-error="Obavezno polje. Mora biti jedno od ponuđenoga." data-success=""
+            localization-key="Obavezno polje. Mora biti jedno od ponuđenoga."></span>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Cjenik URL:">
+            Cjenik URL:
+          </p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="cjenikUrlInput" id="cjenikUrlInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="ID na mapi:">
+            ID na mapi:
+          </p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="number" name="mapaIdInput" id="mapaIdInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Mail:">Mail:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="mailInput" id="mailInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Telefon:">Telefon:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="telefonInput" id="telefonInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="www:">www:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="wwwInput" id="wwwInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Adresa:">Adresa:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="adresaInput" id="adresaInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Mjesto:">Mjesto:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="mjestoInput" id="mjestoInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Država:">Država:</p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="drzavaInput" id="drzavaInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Cjenik text:">
+            Cjenik text:
+          </p>
+        </div>
+        <div class="col s9 m4 l5">
+          <input type="text" name="cjenikTextInput" id="cjenikTextInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="URL text:">URL text:</p>
+        </div>
+        <div class="col s9 m4 l5">
+          <input type="text" name="urlTextInput" id="urlTextInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Panorama:">Panorama:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slikaInput" id="slikaInput" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage('')">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage('')" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col l6 hide-on-med-and-down show-on-large">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika1:">Slika1:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika1Input" id="slika1Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(1)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(1)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika2:">Slika2:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika2Input" id="slika2Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(2)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(2)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika3:">Slika3:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika3Input" id="slika3Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(3)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(3)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika4:">Slika4:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika4Input" id="slika4Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(4)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(4)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika5:">Slika5:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika5Input" id="slika5Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(5)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(5)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika6:">Slika6:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika6Input" id="slika6Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(6)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(6)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika7:">Slika7:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika7Input" id="slika7Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(7)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(7)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Slika8:">Slika8:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika8Input" id="slika8Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate" onclick="changeImage(8)">
+            <i class="material-icons left">add_a_photo</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(8)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="noclickCheckbox" />
+              <span class="mySpanPadding" localization-key="Noclick">Noclick</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="openModalCheckbox" />
+              <span class="mySpanPadding" localization-key="Otvori modal">Otvori modal</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="noteHeaderCheckbox" />
+              <span class="mySpanPadding" localization-key="Note header">Note header</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="overheadTextCheckbox" />
+              <span class="mySpanPadding" localization-key="Tekst iznad objekta">Tekst iznad objekta</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="recommendedCheckbox" />
+              <span class="mySpanPadding" localization-key="Preporučeno">Preporučeno</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="resortCheckbox" />
+              <span class="mySpanPadding" localization-key="Resort">Resort</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="campCheckbox" />
+              <span class="mySpanPadding" localization-key="Camp">Camp</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l10 ">
+          <!--filler div to make everything stay in place-->
+        </div>
+      </div>
+      <p class="left-align" localization-key="Radno vrijeme po danima:">
+        Radno vrijeme po danima:
+      </p>
+      <ul class="tabs">
+        <li class="tab">
+          <a href="#tab_pon" localization-key="Ponedjeljak">Ponedjeljak</a>
+        </li>
+        <li class="tab">
+          <a href="#tab_uto" localization-key="Utorak">Utorak</a>
+        </li>
+        <li class="tab">
+          <a href="#tab_sri" localization-key="Srijeda">Srijeda</a>
+        </li>
+        <li class="tab">
+          <a href="#tab_cet" localization-key="Četvrtak">Četvrtak</a>
+        </li>
+        <li class="tab">
+          <a href="#tab_pet" localization-key="Petak">Petak</a>
+        </li>
+        <li class="tab">
+          <a href="#tab_sub" localization-key="Subota">Subota</a>
+        </li>
+        <li class="tab">
+          <a href="#tab_ned" localization-key="Nedjelja">Nedjelja</a>
+        </li>
+      </ul>
+      <div id="tab_pon">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align">
+            <p localization-key="Od:">Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="ponOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="ponDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align">
+            <p localization-key="Od:">Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="ponOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="ponDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(1)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="tab_uto">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="utoOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="utoDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="utoOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="utoDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(2)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="tab_sri">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="sriOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="sriDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="sriOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="sriDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(3)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="tab_cet">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="cetOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="cetDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="cetOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="cetDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(4)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="tab_pet">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="petOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="petDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="petOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="petDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(5)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="tab_sub">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="subOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="subDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="subOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="subDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(6)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="tab_ned">
+        <div class="row flexWrap valign-wrapper">
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="nedOd1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="nedDo1Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s1 right-align" localization-key="Od:">
+            <p>Od:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="nedOd2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s3 right-align">
+            <p localization-key="Do:">Do:</p>
+          </div>
+          <div class="input-field col s3 noMargins">
+            <input id="nedDo2Input" class="timepicker" type="text" autocomplete="off" />
+          </div>
+          <div class="col s2">
+            <!--filler div to make everything stay in place-->
+          </div>
+          <div class="col s12">
+            <button class="btn waves-effect waves-light" onclick="kopirajZaSveDane(0)"
+              localization-key="Kopiraj za sve dane">
+              Kopiraj za sve dane
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="neradniPeriodiDiv" class="row valign-wrapper flexWrap"></div>
+      <div class="row">
+        <div class="col s12 l2">
+          <p class="left-align" localization-key="Napomena:">Napomena:</p>
+        </div>
+        <div class="col s12 l10">
+          <ul class="tabs">
+            <li class="tab"><a href="#tab_hr">hr</a></li>
+            <li class="tab"><a href="#tab_en">en</a></li>
+            <li class="tab"><a href="#tab_de">de</a></li>
+            <li class="tab"><a href="#tab_it">it</a></li>
+            <li class="tab"><a href="#tab_nl">nl</a></li>
+            <li class="tab"><a href="#tab_ru">ru</a></li>
+            <li class="tab"><a href="#tab_si">si</a></li>
+            <li class="tab"><a href="#tab_pl">pl</a></li>
+          </ul>
+        </div>
+        <div id="tab_hr" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_hrInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_en" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_enInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_de" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_deInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_it" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_itInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_nl" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_nlInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_ru" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_ruInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_si" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_siInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+        <div id="tab_pl" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="napomena_plInput" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="row valign-wrapper flexWrap">
+        <div class="col s3">
+          <h5 class="left" localization-key="Pogodnosti:">Pogodnosti:</h5>
+        </div>
+        <div class="col s9">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="sinkCheckbox" />
+              <span class="mySpanPadding" localization-key="Sudoper">Sudoper</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="showerCheckbox" />
+              <span class="mySpanPadding" localization-key="Tuš">Tuš</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="childrenToiletCheckbox" />
+              <span class="mySpanPadding" localization-key="Dječji WC">Dječji WC</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="chemicalToiletCheckbox" />
+              <span class="mySpanPadding" localization-key="Kemijski WC">Kemijski WC</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="disabledToiletCheckbox" />
+              <span class="mySpanPadding" localization-key="WC za invalide">WC za invalide</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="privateToiletCheckbox" />
+              <span class="mySpanPadding" localization-key="Privatni WC">Privatni WC</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="clothingWashCheckbox" />
+              <span class="mySpanPadding" localization-key="Pranje rublja">Pranje rublja</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="dishWashCheckbox" />
+              <span class="mySpanPadding" localization-key="Pranje posuđa">Pranje posuđa</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="laundryCheckbox" />
+              <span class="mySpanPadding" localization-key="Perilica rublja">Perilica rublja</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="dryerCheckbox" />
+              <span class="mySpanPadding" localization-key="Sušilica">Sušilica</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="dogShowerCheckbox" />
+              <span class="mySpanPadding" localization-key="Tuš za pse">Tuš za pse</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="refrigeratorCheckbox" />
+              <span class="mySpanPadding" localization-key="Hladnjak">Hladnjak</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="ambulantaCheckbox" />
+              <span class="mySpanPadding" localization-key="Ambulanta">Ambulanta</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="barCheckbox" />
+              <span class="mySpanPadding" localization-key="Bar">Bar</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="restaurantCheckbox" />
+              <span class="mySpanPadding" localization-key="Restoran">Restoran</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="wellnessCheckbox" />
+              <span class="mySpanPadding" localization-key="Wellness">Wellness</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="hairdresserCheckbox" />
+              <span class="mySpanPadding" localization-key="Frizer">Frizer</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="fitnessCheckbox" />
+              <span class="mySpanPadding" localization-key="Fitness">Fitness</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="kioskCheckbox" />
+              <span class="mySpanPadding" localization-key="Kiosk">Kiosk</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l10">
+          <!--filler div to make everything stay in place-->
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="saveButton" class="waves-effect waves-light btn">
+        <i class="material-icons left">save</i>
+        <span localization-key="Spremi">Spremi</span>
+      </button>
+      <button class="waves-effect waves-light btn modal-close">
+        <i class="material-icons left">cancel</i>
+        <span localization-key="Poništi">Poništi</span>
+      </button>
+    </div>
+  </div>
+  <!-- Image display modal -->
+  <div id="imageDisplayModal" class="modal fitContent">
+    <div class="modal-content" onclick="closeImage()">
+      <!--img tag to display images-->
+      <img id="imageDisplay" src="" alt="" />
+    </div>
+  </div>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="container">
+      <h5 class="center-align white-text" localization-key="Upload slike:">
+        Upload slike:
+      </h5>
+      <div class="progress">
+        <div id="progressBar" class="determinate" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--JavaScript at end of body for optimized loading-->
+  <!-- Compiled and minified JavaScript for materialize-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title localization-key="Postavke">Postavke</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!--Import main.css-->
+  <link rel="stylesheet" type="text/css" media="screen" href="/cms/public/main.css" />
+  <!--Import loader.css-->
+  <link rel="stylesheet" type="text/css" media="screen" href="/cms/loader.css" />
+  <!--Import materialize.css-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <!--Import jQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!--Import javascript-->
+  <script src="/cms/functions/functionsFrontend.js"></script>
+  <script src="/cms/functions/loaderFunctions.js"></script>
+  <script src="/cms/functions/imageFunctions.js"></script>
+  <script src="/cms/functions/httpFunctions.js"></script>
+  <script src="/cms/functions/validationFunctions.js"></script>
+  <script src="/cms/postavke.js"></script>
+</head>
+
+<body>
+  <!--Fixed menu button for smaller screens-->
+  <div class="fixed-action-btn navBarButton">
+    <button data-target="myNavBar" class="waves-effect waves-light btn sidenav-trigger">
+      <i class="material-icons">menu</i>
+    </button>
+  </div>
+  <div class="row">
+    <!--Navbar-->
+    <ul id="myNavBar" class="sidenav sidenav-fixed col s0 l2">
+      <li>
+        <a href="/cms" class="truncate"><b localization-key="DASHBOARD">DASHBOARD</b></a>
+      </li>
+      <li>
+        <a id="activeKampName" href="#" class="truncate"></a>
+      </li>
+      <div class="divider"></div>
+      <li>
+        <a href="/cms/vrstaSJ" class="truncate" localization-key="Vrsta smještajne jedinice">Vrsta smještajne
+          jedinice</a>
+      </li>
+      <li>
+        <a href="/cms/brojSJ" class="truncate" localization-key="Smještajna jedinica">Smještajna jedinica</a>
+      </li>
+      <li>
+        <a href="/cms/objekti" class="truncate" localization-key="Objekti">Objekti</a>
+      </li>
+      <li>
+        <a href="/cms/tockeInteresa" class="truncate" localization-key="Točke interesa">Točke interesa</a>
+      </li>
+      <li>
+        <a href="/cms/translations" class="truncate" localization-key="Prijevodi">Prijevodi</a>
+      </li>
+      <li>
+        <a href="/cms/natpisi" class="truncate" localization-key="Natpisi">Natpisi</a>
+      </li>
+      <div class="divider"></div>
+      <li>
+        <a href="/cms/postavke" class="truncate activeLinkName" localization-key="Postavke">Postavke</a>
+      </li>
+      <li>
+        <a href="/cms/stopBooking" class="truncate" localization-key="Stop Booking">Stop Booking</a>
+      </li>
+      <!--li>
+        <a href="/cms/cjenici" class="truncate" localization-key="Cjenici">Cjenici</a>
+      </li-->
+      <li class="hide showToAdmin">
+        <a href="/cms/useri" class="truncate" localization-key="Useri">Useri</a>
+      </li>
+      <li class="hide showToAdmin">
+        <a href="/cms/parametri" class="truncate" localization-key="Parametri">Parametri</a>
+      </li>
+      <li>
+        <a href="/cms/dozvoljeniCjenici" class="truncate" localization-key="Dozvoljeni cjenici">Dozvoljeni cjenici</a>
+      </li>
+      <li>
+        <a href="/cms/ostalePostavke" class="truncate" localization-key="Ostale postavke">Ostale postavke</a>
+      </li>
+      <div class="divider"></div>
+      <li>
+        <a href="/cms/redoslijed" class="truncate" localization-key="Redoslijed vrsta sjmeštajne jedinice">Redoslijed vrsta sjmeštajne jedinice</a>
+      </li>
+      <li>
+        <a href="/cms/redoslijedPoi" class="truncate" localization-key="Redoslijed točki interesa">Redoslijed točki
+          interesa</a>
+      </li>
+      <li>
+        <a href="/cms/osuncanost" class="truncate" localization-key="Osunčanost">Osunčanost</a>
+      </li>
+      <li>
+        <a href="/cms/grupeTocki" class="truncate" localization-key="Grupe točki interesa">Grupe točki interesa</a>
+      </li>
+      <li>
+        <a href="/cms/podloga" class="truncate" localization-key="Podloge parcela">Podloge parcela</a>
+      </li>
+      <div class="divider"></div>
+      <li class="hide showToAdmin">
+        <a href="/cms/integracije" class="truncate" localization-key="Integracije">Integracije</a>
+      </li>
+      <li class="hide showToAdmin">
+        <a href="/cms/paymentGw" class="truncate" localization-key="Payment gateway">Payment gateway</a>
+      </li>
+      <div class="divider hide showToAdmin"></div>
+      <li>
+        <a href="/cms/logout" class="truncate" localization-key="Odjavi se" onclick="logout()">Odjavi se</a>
+      </li>
+    </ul>
+    <!--page contents-->
+    <div class="col s12 l10 offset-l2">
+      <div class="row valign-wrapper flexWrap">
+        <div class="col m1 l2 hide-on-small-only show-on-medium-and-up">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <div class="col s12 m10 l7">
+          <h4 class="center mainTitle" localization-key="Postavke">
+            Postavke
+          </h4>
+        </div>
+        <div class="col m1 l3 hide-on-small-only show-on-medium-and-up">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <!-- Edit object modal - but not in a modal-->
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Naziv:">Naziv:</p>
+        </div>
+        <div class="col s9 m3 l3">
+          <input type="text" name="nazivInput" id="nazivInput" />
+          <span class="helper-text" data-error="Obavezno polje." data-success=""
+            localization-key="Obavezno polje."></span>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Dodatni naziv:">
+            Dodatni naziv:
+          </p>
+        </div>
+        <div class="col s9 m5 l5">
+          <input type="text" name="dodatniNazivInput" id="dodatniNazivInput" />
+        </div>
+        <div class="col s12 m12 l2">
+          <button class="waves-effect waves-light btn truncate disableOnNewKamp" onclick="updateUnitId()"
+            localization-key="Ažuriraj Unit ID">
+            Ažuriraj Unit ID
+          </button>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Mail:">Mail:</p>
+        </div>
+        <div class="col s9 m4 l2">
+          <input type="text" name="mailInput" id="mailInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Telefon:">Telefon:</p>
+        </div>
+        <div class="col s9 m4 l2">
+          <input type="text" name="telefonInput" id="telefonInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Web stranica:">
+            Web stranica:
+          </p>
+        </div>
+        <div class="col s9 m4 l2">
+          <input type="text" name="wwwInput" id="wwwInput" />
+        </div>
+        <div class="col s10 m4 l2">
+          <p class="right-align" localization-key="Čuvati broj SJ kod rezervacije - minuta:">
+            Čuvati broj SJ kod rezervacije - minuta:
+          </p>
+        </div>
+        <div class="col s2 m2 l1">
+          <input type="number" name="cuvanjeRezMinutaInput" id="cuvanjeRezMinutaInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Otvoren od:">
+            Otvoren od:
+          </p>
+        </div>
+        <div class="col s3 m4 l2">
+          <input type="text" class="datepicker" id="otvorenOdInput" autocomplete="off" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Otvoren do:">
+            Otvoren do:
+          </p>
+        </div>
+        <div class="col s3 m4 l2">
+          <input type="text" class="datepicker" id="otvorenDoInput" autocomplete="off" />
+        </div>
+        <div class="col s10 m5 l2">
+          <p class="right-align" localization-key="Minimalno dana za rezervaciju parcele:">
+            Minimalno dana za rezervaciju parcele:
+          </p>
+        </div>
+        <div class="col s2 m1 l1">
+          <input type="number" name="minDanRezInput" id="minDanRezInput" />
+        </div>
+        <div class="col s10 m5 l2">
+          <p class="right-align" localization-key="Minimalno dana za rezervaciju mobilke:">
+            Minimalno dana za rezervaciju mobilke:
+          </p>
+        </div>
+        <div class="col s2 m1 l1">
+          <input type="number" name="minDanRezMobilkeInput" id="minDanRezMobilkeInput" />
+        </div>
+        <div class="col s3 m4 l3">
+          <p class="right-align" localization-key="Početni dan za rezervaciju parcele:">
+            Početni dan za rezervaciju parcele:
+          </p>
+        </div>
+        <div class="col s3 m2 l3">
+          <input type="text" class="datepicker" id="rezParcelaStartDateInput" autocomplete="off" />
+        </div>
+        <div class="col s3 m4 l3">
+          <p class="right-align" localization-key="Početni dan za rezervaciju mobilke:">
+            Početni dan za rezervaciju mobilke:
+          </p>
+        </div>
+        <div class="col s3 m2 l3">
+          <input type="text" class="datepicker" id="rezMobilkaStartDateInput" autocomplete="off" />
+        </div>
+        <div class="col s4 m2 l2">
+          <p class="right-align" localization-key="Max. Osoba Parcele:">
+            Max. Osoba Parcele:
+          </p>
+        </div>
+        <div class="input-field col s2 m1 l1">
+          <input type="number" name="brojOsobaInput" id="brojOsobaInput" />
+        </div>
+        <div class="col s4 m2 l2">
+          <p class="right-align" localization-key="Max. Djece Parcele:">
+            Max. Djece Parcele:
+          </p>
+        </div>
+        <div class="input-field col s2 m1 l1">
+          <input type="number" name="brojDjeceInput" id="brojDjeceInput" />
+        </div>
+        <div class="col s4 m2 l2">
+          <p class="right-align" localization-key="Max. Osoba MH:">
+            Max. Osoba MH:
+          </p>
+        </div>
+        <div class="input-field col s2 m1 l1">
+          <input type="number" name="brojOsobaMhInput" id="brojOsobaMhInput" />
+        </div>
+        <div class="col s4 m2 l2">
+          <p class="right-align" localization-key="Max. Djece MH:">
+            Max. Djece MH:
+          </p>
+        </div>
+        <div class="input-field col s2 m1 l1">
+          <input type="number" name="brojDjeceMhInput" id="brojDjeceMhInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Logo:">Logo:</p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika1Input" id="slika1Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate disableOnNewKamp" onclick="changeImage(1)">
+            <i class="material-icons left">add_a_photo</i>
+            <span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(1)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Default slika:">
+            Default slika:
+          </p>
+        </div>
+        <div class="col s9 m5 l2">
+          <input type="text" name="slika2Input" id="slika2Input" />
+        </div>
+        <div class="col s9 m4 l2">
+          <button class="waves-effect waves-light btn truncate disableOnNewKamp" onclick="changeImage(2)">
+            <i class="material-icons left">add_a_photo</i>
+            <span localization-key="Promijeni">Promijeni</span>
+          </button>
+        </div>
+        <div class="col s3 m1 l1">
+          <a onclick="openImage(2)" href="#">
+            <i class="material-icons medium">image</i>
+          </a>
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="Adresa:">Adresa:</p>
+        </div>
+        <div class="col s9 m4 l5">
+          <input type="text" name="adresaInput" id="adresaInput" />
+        </div>
+        <div class="col s3 m1 l1">
+          <p class="right-align" localization-key="Mjesto:">Mjesto:</p>
+        </div>
+        <div class="col s3 m2 l2">
+          <input type="text" name="mjestoInput" id="mjestoInput" />
+        </div>
+        <div class="col s3 m1 l1">
+          <p class="right-align" localization-key="Država:">Država:</p>
+        </div>
+        <div class="col s3 m2 l2">
+          <input type="text" name="drzavaInput" id="drzavaInput" />
+        </div>
+        <div class="col s3 m2 l2">
+          <p class="right-align" localization-key="Geografska širina:">
+            Geografska širina:
+          </p>
+        </div>
+        <div class="col s3 m3 l3">
+          <input type="number" name="latitudeInput" id="latitudeInput" />
+        </div>
+        <div class="col s3 m2 l2">
+          <p class="right-align" localization-key="Geografska dužina:">
+            Geografska dužina:
+          </p>
+        </div>
+        <div class="col s3 m3 l3">
+          <input type="number" name="longitudeInput" id="longitudeInput" />
+        </div>
+        <div class="col s12 m2 l2">
+          <button class="btn waves-effect waves-light truncate" onclick="pasteCoordinates()"
+            localization-key="Zalijepi">
+            Zalijepi
+          </button>
+        </div>
+        <div class="col s3 m2 l2">
+          <p class="right-align" localization-key="PHOBS ID parcele:">
+            PHOBS ID parcele:
+          </p>
+        </div>
+        <div class="col s9 m4 l4">
+          <input type="text" name="phobsIdParceleInput" id="phobsIdParceleInput" />
+        </div>
+        <div class="col s3 m2 l2">
+          <p class="right-align" localization-key="PHOBS ID mobilke:">
+            PHOBS ID mobilke:
+          </p>
+        </div>
+        <div class="col s9 m4 l4">
+          <input type="text" name="phobsIdMobilkeInput" id="phobsIdMobilkeInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="PHOBS user:">
+            PHOBS user:
+          </p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="text" name="phobs_usernameInput" id="phobs_usernameInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="PHOBS pass:">
+            PHOBS pass:
+          </p>
+        </div>
+        <div class="col s9 m4 l3">
+          <input type="password" name="phobs_passwordInput" id="phobs_passwordInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="PHOBS SiteID:">
+            PHOBS SiteID:
+          </p>
+        </div>
+        <div class="col s3 m4 l3">
+          <input type="text" name="phobs_siteidInput" id="phobs_siteidInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="PMS API ključ:">
+            PMS API ključ:
+          </p>
+        </div>
+        <div class="col s3 m4 l3">
+          <input type="text" name="pmsApiKeyInput" id="pmsApiKeyInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="PMS token:">PMS token:</p>
+        </div>
+        <div class="col s3 m4 l3">
+          <input type="password" name="pmsTokenInput" id="pmsTokenInput" />
+        </div>
+        <div class="col s3 m2 l1">
+          <p class="right-align" localization-key="PMS PropertyID:">
+            PMS PropertyID:
+          </p>
+        </div>
+        <div class="col s3 m4 l3">
+          <input type="text" name="propertyidInput" id="propertyidInput" />
+        </div>
+        <div class="col s3 m2 l2">
+          <p class="right-align" localization-key="RateID parcele:">
+            RateID parcele:
+          </p>
+        </div>
+        <div class="col s3 m4 l4">
+          <input type="text" name="rateIdParceleInput" id="rateIdParceleInput" />
+        </div>
+        <div class="col s3 m2 l2">
+          <p class="right-align" localization-key="RateID mobilke:">
+            RateID mobilke:
+          </p>
+        </div>
+        <div class="col s3 m4 l4">
+          <input type="text" name="defaultRateIdInput" id="defaultRateIdInput" />
+        </div>
+        <div class="col s4 m3 l2">
+          <p class="right-align" localization-key="Mapbox token:">
+            Mapbox token:
+          </p>
+        </div>
+        <div class="input-field col s8 m9 l10">
+          <input type="text" name="mapboxTokenInput" id="mapboxTokenInput" />
+        </div>
+        <div class="col s3 m3 l2">
+          <p class="right-align" localization-key="Geojson file:">
+            Geojson file:
+          </p>
+        </div>
+        <div class="input-field col s4 m4 l6">
+          <input type="text" name="geojsonFileInput" id="geojsonFileInput" />
+        </div>
+        <div class="col s5 m5 l4">
+          <button class="waves-effect waves-light btn truncate" onclick="uploadGeojson()">
+            <i class="material-icons left">upload_file</i><span localization-key="Promijeni">Promijeni</span>
+          </button>
+          <button class="waves-effect waves-light btn truncate" onclick="revertGeojson()">
+            <i class="material-icons left">undo</i><span localization-key="Vrati na prošli">Vrati na prošli</span>
+          </button>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="bookingModulCheckbox" />
+              <span localization-key="Booking modul">Booking modul</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="zatvoriBookingCheckbox" />
+              <span localization-key="Zatvori booking">Zatvori booking</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="panomiframeCheckbox" />
+              <span localization-key="Panom iframe">Panom iframe</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="sortFilterRbCheckbox" />
+              <span localization-key="Sort filter RB">Sort filter RB</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="upitVidljivoCheckbox" />
+              <span localization-key="Pošalji upit vidljivo">Pošalji upit vidljivo</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="nazivHeaderCheckbox" />
+              <span localization-key="Naziv u headeru">Naziv u headeru</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="maintenanceModeCheckbox" />
+              <span localization-key="Maintenance mode">Maintenance mode</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="imaParceleCheckbox" />
+              <span localization-key="Ima Parcele">Ima Parcele</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="imaMhCheckbox" />
+              <span localization-key="Ima MH">Ima MH</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="navigacijaCheckbox" />
+              <span localization-key="Navigacija">Navigacija</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="showDistancesCheckbox" />
+              <span localization-key="Prikaži najbliže udaljenosti">Prikaži najbliže udaljenosti</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="paymentGatewayCheckbox" />
+              <span localization-key="Payment Gateway">Payment Gateway</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="filterAsButtonCheckbox" />
+              <span localization-key="Filter kao dugme">Filter kao dugme</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="loyaltyCheckbox" />
+              <span localization-key="Loyalty">Loyalty</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m4 l2">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="popunjavanjeRupaCheckbox" />
+              <span localization-key="Popunjavanje rupa">Popunjavanje rupa</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 l6 hide-on-med-only">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <div id="jeziciLabel" class="col s12 m12 l4">
+          <h6 localization-key="Višejezičnost:">Višejezičnost:</h6>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="hrCheckbox" />
+              <span>HR</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="enCheckbox" />
+              <span>EN</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="deCheckbox" />
+              <span>DE</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="itCheckbox" />
+              <span>IT</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="nlCheckbox" />
+              <span>NL</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="ruCheckbox" />
+              <span>RU</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="siCheckbox" />
+              <span>SI</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s6 m3 l1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="plCheckbox" />
+              <span>PL</span>
+            </label>
+          </p>
+        </div>
+      </div>
+      <div id="periodiDiv"></div>
+      <div class="right-align myMargins">
+        <button class="waves-effect waves-light btn green disableOnNewKamp" onclick="addNewPeriod()">
+          <i class="material-icons left">add</i>
+          <span localization-key="Dodaj novi period">Dodaj novi period</span>
+        </button>
+      </div>
+      <div class="divider"></div>
+      <div class="myMargins">
+        <button class="waves-effect waves-light btn red left disableOnNewKamp" onclick="confirmDelete()">
+          <i class="material-icons left">delete</i>
+          <span localization-key="Obriši kamp">Obriši kamp</span>
+        </button>
+        <button class="waves-effect waves-light btn right" onclick="saveButton()">
+          <i class="material-icons left">save</i>
+          <span localization-key="Spremi">Spremi</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Edit period modal-->
+  <div id="editPeriodModal" class="modal">
+    <div class="modal-content">
+      <div class="row valign-wrapper flexWrap">
+        <div class="col s3 l2">
+          <p class="right-align" localization-key="Tip:">Tip:</p>
+        </div>
+        <div class="input-field col s9 l4">
+          <select id="tipInput">
+            <option value="" disabled selected localization-key="Odaberite tip">
+              Odaberite tip
+            </option>
+            <option value="P" localization-key="Parcela">Parcela</option>
+            <option value="M" localization-key="Mobilna kućica/Glamping">
+              Mobilna kućica/Glamping
+            </option>
+          </select>
+          <span class="helper-text" data-error="Obavezno polje." data-success=""
+            localization-key="Obavezno polje."></span>
+        </div>
+        <div class="col s9 l5">
+          <p class="right-align" localization-key="Minimalno dana za rezervaciju:">
+            Minimalno dana za rezervaciju:
+          </p>
+        </div>
+        <div class="col s3 l1">
+          <input type="text" name="minDanRezPeriodiInput" id="minDanRezPeriodiInput" />
+          <!--MOZDA refaktorirati imena varijabli koje treba pa maknuti Periodi iz tog id-a-->
+        </div>
+        <div class="col s3 l2">
+          <p class="right-align" localization-key="Aktivan:">Aktivan:</p>
+        </div>
+        <div class="col s9 l2">
+          <p>
+            <label>
+              <input type="checkbox" class="filled-in" id="aktivanCheckbox" />
+              <span></span>
+            </label>
+          </p>
+        </div>
+        <div class="col s3 l2">
+          <p class="right-align" localization-key="Datum od:">Datum od:</p>
+        </div>
+        <div class="col s3 l2">
+          <input type="text" class="datepicker" id="datumOdInput" autocomplete="off" />
+          <span class="helper-text" data-error="Obavezno polje, mora biti prije datuma do." data-success=""
+            localization-key="Obavezno polje, mora biti prije datuma do."></span>
+        </div>
+        <div class="col s3 l2">
+          <p class="right-align" localization-key="Datum do:">Datum do:</p>
+        </div>
+        <div class="col s3 l2">
+          <input type="text" class="datepicker" id="datumDoInput" autocomplete="off" />
+          <span class="helper-text" data-error="Obavezno polje, mora biti poslije datuma od." data-success=""
+            localization-key="Obavezno polje, mora biti poslije datuma od."></span>
+        </div>
+        <div class="col s3">
+          <p class="right-align" localization-key="Dolasci:">Dolasci:</p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="ponDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="pon">pon</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="utoDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="uto">uto</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="sriDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="sri">sri</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="cetDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="cet">cet</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="petDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="pet">pet</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="subDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="sub">sub</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="nedDolazakCheckbox" />
+              <span class="mySpanPadding" localization-key="ned">ned</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s2">
+          <!--filler div to make everything stay in place-->
+        </div>
+        <div class="col s3">
+          <p class="right-align" localization-key="Odlasci:">Odlasci:</p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="ponOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="pon">pon</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="utoOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="uto">uto</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="sriOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="sri">sri</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="cetOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="cet">cet</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="petOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="pet">pet</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="subOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="sub">sub</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s1">
+          <p>
+            <label class="black-text">
+              <input type="checkbox" class="filled-in" id="nedOdlazakCheckbox" />
+              <span class="mySpanPadding" localization-key="ned">ned</span>
+            </label>
+          </p>
+        </div>
+        <div class="col s2">
+          <!--filler div to make everything stay in place-->
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="saveButton" class="waves-effect waves-light btn">
+        <i class="material-icons left">save</i>
+
+        <span localization-key="Spremi">Spremi</span>
+      </button>
+      <button id="activeCancelButton" class="waves-effect waves-light btn modal-close hide">
+        <i class="material-icons left">cancel</i>
+        <span localization-key="Poništi">Poništi</span>
+      </button>
+      <button id="passiveCancelButton" class="waves-effect waves-light btn modal-close">
+        <i class="material-icons left">cancel</i>
+        <span localization-key="Poništi">Poništi</span>
+      </button>
+    </div>
+  </div>
+  <!-- Confirm delete modal -->
+  <div id="confirmDelete" class="modal fitContent">
+    <div class="modal-content">
+      <h4 localization-key="Upozorenje">Upozorenje</h4>
+      <p localization-key="Jeste li sigurni da želite obrisati taj kamp?">
+        Jeste li sigurni da želite obrisati taj kamp?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close waves-effect waves-green btn-flat">
+        <i class="material-icons left">cancel</i>
+
+        <span localization-key="Ne">Ne</span>
+      </button>
+      <button id="confirmDeleteButton" class="modal-close waves-effect waves-green btn-flat">
+        <i class="material-icons left">check</i>
+
+        <span localization-key="Da">Da</span>
+      </button>
+    </div>
+  </div>
+  <!-- Confirm delete period modal -->
+  <div id="confirmDeletePeriod" class="modal fitContent">
+    <div class="modal-content">
+      <h4 localization-key="Upozorenje">Upozorenje</h4>
+      <p localization-key="Jeste li sigurni da želite obrisati taj period?">
+        Jeste li sigurni da želite obrisati taj period?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close waves-effect waves-green btn-flat">
+        <i class="material-icons left">cancel</i>
+        <span localization-key="Ne">Ne</span>
+      </button>
+      <button id="confirmDeletePeriodButton" class="modal-close waves-effect waves-green btn-flat">
+        <i class="material-icons left">check</i>
+        <span localization-key="Da">Da</span>
+      </button>
+    </div>
+  </div>
+  <!-- Image display modal -->
+  <div id="imageDisplayModal" class="modal fitContent">
+    <div class="modal-content" onclick="closeImage()">
+      <!--img tag to display images-->
+      <img id="imageDisplay" src="" alt="" />
+    </div>
+  </div>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="container">
+      <h5 class="center-align white-text" localization-key="Upload:">
+        Upload:
+      </h5>
+      <div class="progress">
+        <div id="progressBar" class="determinate" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--JavaScript at end of body for optimized loading-->
+  <!-- Compiled and minified JavaScript for materialize-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
